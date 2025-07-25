@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+
+        <!-- <link rel="stylesheet" href="style.css" /> -->
+        <style>
+            * {
+                padding: 0;
+                margin: 0;
+                font-family: "Franklin Gothic Medium", "Arial Narrow", Arial,
+                    sans-serif;
+            }
+            .container {
+                height: 100vh;
+                width: 100vw;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                background: #f1f1f1;
+            }
+
+            .form-container {
+                display: flex;
+                gap: 30px;
+            }
+
+            .form-container form {
+                padding: 20px;
+                border: 2px solid #94b9eb;
+                border-radius: 10px;
+
+                display: flex;
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .form-item {
+                display: flex;
+                flex-direction: row;
+                gap: 4px;
+                position: relative;
+
+                height: 60px;
+                background-color: antiquewhite;
+            }
+
+            form input,
+            button {
+                border: 2px solid #94b9eb;
+                border-radius: 8px;
+                padding: 8px 12px;
+                display: inline-block;
+            }
+
+            form > button {
+                background-color: #bdd1eb;
+                cursor: pointer;
+            }
+
+            form > button:hover {
+                background-color: #94baec;
+            }
+
+            .delete {
+                background-color: #eb9494;
+            }
+
+            .delete:hover {
+                background-color: #ec9494;
+                cursor: pointer;
+            }
+
+            table,
+            th,
+            td {
+                border: 2px solid #94b9eb;
+                border-collapse: collapse;
+                padding: 4px 8px;
+            }
+
+            tbody > tr {
+                height: 24px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="form-container">
+                <form action="">
+                    <input
+                        id="lastName"
+                        type="text"
+                        name="lastName"
+                        placeholder="Last Name..."
+                    />
+                    <input
+                        id="firstName"
+                        type="text"
+                        name="firstName"
+                        placeholder="First Name..."
+                    />
+                    <input
+                        id="age"
+                        type="number"
+                        name="age"
+                        placeholder="Age..."
+                    />
+
+                    <button type="button" onclick="addData()">Nemeh</button>
+                </form>
+
+                <table>
+                    <thead>
+                        <tr>
+                            <th>no</th>
+                            <th>First name</th>
+                            <th>Last nama</th>
+                            <th>Age</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="body"></tbody>
+                </table>
+            </div>
+        </div>
+
+        <script>
+            let data = []
+
+            function renderData() {
+                const body = document.getElementById("body")
+                body.innerHTML = ""
+
+                data.forEach((user, index) => {
+                    const row = document.createElement("tr")
+
+                    row.innerHTML = `
+                        <td>${index + 1}</td>
+                        <td>${user.firstName}</td>
+                        <td>${user.lastName}</td>
+                        <td>${user.age}</td>
+                        <td><button class="delete" onclick="deleteRow(${index})">Delete</button></td>
+                    `
+
+                    body.appendChild(row)
+                })
+
+                data.forEach()
+            }
+
+            const addData = () => {
+                const firstName = document.getElementById("firstName")
+                const lastName = document.getElementById("lastName")
+                const age = document.getElementById("age")
+
+                if (!firstName.value || !lastName.value || !age.value) {
+                    alert("Please fill out all fields")
+                    return
+                }
+
+                const user = {
+                    firstName: firstName.value,
+                    lastName: lastName.value,
+                    age: parseInt(age.value),
+                }
+
+                data.push(user)
+
+                firstName.value = ""
+                lastName.value = ""
+                age.value = ""
+
+                renderData()
+            }
+
+            function deleteRow(index) {
+                data.splice(index, 1)
+                renderData()
+            }
+        </script>
+    </body>
+</html>
